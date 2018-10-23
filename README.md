@@ -2,7 +2,7 @@
 This repo contains the scripts to do simple text mining and analysis on the public Hacker News data set. <br>
 
 We also would seek to answer the following questions:
-1. What are the tending topics? Can they be used as part of market research for seed acceleration purposes?
+1. What are the trending topics? Can they be used as part of market research for seed acceleration purposes?
 2. What should writers focus on?
 3. Recent studies have found that many forums tend to be dominated by a very small fraction of users. Is this true of Hacker News?
 4. Hacker News has received complaints that the site is biased towards Y Combinator startups. Do the data support this?

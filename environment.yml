@@ -1,0 +1,23 @@
+name: hackerNews
+channels:
+  - defaults
+dependencies:
+  - python=3
+  - pip
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - nltk
+  - pillow
+  - tensorflow
+  - tensorflow-gpu
+  - keras
+  - gensim
+  - pymongo
+  - beautifulsoup4
+  - requests
+  - selenium
+  - pip:
+    - wordcloud
+

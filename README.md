@@ -1,15 +1,23 @@
 # Text Mining on Hacker News Corpus
-This repo contains the scripts to do simple text mining and analysis on the public HackerNews data set. 
+This repo contains the scripts to do simple text mining and analysis on the public Hacker News data set. <br>
+
+We also would seek to answer the following questions:
+1. What are the tending topics? Can they be used as part of market research for seed acceleration purposes?
+2. What should writers focus on?
+3. Recent studies have found that many forums tend to be dominated by a very small fraction of users. Is this true of Hacker News?
+4. Hacker News has received complaints that the site is biased towards Y Combinator startups. Do the data support this?
+
+For a detail answers to these questions, please refer to `report.pdf`.
 
 # Data
-Hacker News is a social news website ran by investment fund and startup incubator, Y combinator. It focuses on computer science and entrepreneurship.  <br>
+Hacker News is a social news website ran by investment fund and startup incubator, Y combinator. It focuses on computer science and entrepreneurship. he dataset we will be using is from an open source dataset containing all the posts from Hacker News from 2006 till date. For 2018 itself, there are approximately 1.9 million rows of data for analysis, with text data from 113169 unique users. 
+ <br>
+
+## Data Dictionary
+ ![data_dictionary](pictures/data_dictionary.png)
 
 ## BigQuery
 The complete dataset can be queried using Google Cloud Platform (GCP) from [here](https://cloud.google.com/bigquery/public-data/hacker-news). <br>
-
-## About the dataset
-This dataset contains all stories and comments from Hacker News from its launch in 2006. Each story contains a story id, the author that made the post, when it was written, and the number of points the story received.
-
 
 # Setup
 ## Requirements
@@ -26,22 +34,61 @@ cd TextMiningHackerNews
 conda env create -f=environment.yml
 ```
 
-# Business Questions
-
-# Techniques
-## Text Cleaning
-### html encoding
+# Text Cleaning
+## html encoding
 Most of the text in the comments contain `html encoding` which we need to clean, either by dropping them or converting them to their intended display character. <br>
 
-Fortunately, `Python3` has an `html` package which a method called `unescape` that quickly converts the `html encoding` to the human readable text.
+Fortunately, `Python3` has an `html` package which a method called `unescape` that quickly converts the `html encoding` to the human readable text. <br>
 
-## Topic Modelling
+With a series of regex, we could clean the corpus till it is usable for us to performing text mining on. <br>
 
+In preparing the data to train our word2vec model, we adopted the following pipeline:
+1. Takes in raw corpus extracted from MongoDB
+2. First round of cleaning
+    - Remove comments with length < 5
+    - Unescape html encoding
+    - Remove html tags and unnecessary spaces
+    - Decontraction
+3. Sentence Tokenization
+4. Second round of cleaning
+    - Remove punctuation
+5. Word Tokenization
+6. Third round of cleaning
+    - Stopwords removals,
+    - POS tagging
+    - POS filtering
+        - Only allow Noun, Verbs, Adjectives and Adverbs
+    - Lemmatize Noun and Verbs
+
+An example is shown below:
+
+![dirty_text](pictures/dirty_text.png)
+
+<center> to </center>
+
+![clean_text](pictures/clean_text.png)
+# Topic Modelling
+With the text cleaned, we can generatethe following illustrations to get a sense of what the users of Hacker News are chatting about. <br>
+
+Below is summary of what most users are chatting about.
+
+![topic_models](pictures/topic_models.png)
+
+## Word Cloud
+![combined_word_cloud](pictures/combined_wordcloud.png)
 ## Latent Dirichlet Allocation (LDA)
 
 
 ## Word2Vec
+Upon training on the text data from 2016 to 2018, we achieve the following word2vec embedding:
+![word2vec](pictures/word2vec.gif)
 
+To get the following visualization, open the `useful_links.txt` file and download the contents of the visualize_result into a new folder at the root directory of your project. Rename the folder to `visualize_result`. <br>
+
+With that, run the following <br>
+```
+tensorboard --logdir visualize_result
+```
 
 # Personal Notes
 ## Pandas
